@@ -10,10 +10,19 @@ var csrfProtection  = csrf()
 router.use(csrfProtection)
 /* GET users listing. */
 
+//obtenir cette routes si l'utilisateur est connecté
 router.get('/profile', isLoggedIn,(req, res, next) => {
   res.render('user/profile')
 })
-router.use('/', notLoggedIn, (req, res, next) => {
+
+router.get('/logout', isLoggedIn, (req, res, next) => {
+  req.logout()
+  res.redirect('/')
+})
+
+
+//utiliser cette route (localhost) tant que nous sommes deconnecté
+router.use('/', notLoggedIn,(req, res, next) => {
   next();
 })
 
@@ -40,10 +49,6 @@ router.post('/signin', passport.authenticate('local.signin', {
   failureRedirect : '/user/signin',
   failureFlash : true
 }))
-router.get('/logout', (req, res, next) => {
-  req.logout()
-  res.redirect('/')
-})
 
 
 module.exports = router;
