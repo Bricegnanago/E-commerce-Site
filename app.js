@@ -10,34 +10,39 @@ const session = require('express-session')
 const flash = require('connect-flash')
 var passport = require('passport')
 var validator = require('express-validator')
+var MongoStore = require('connect-mongo')(session)
 mongoose.connect('mongodb://localhost:27017/shopping', { useNewUrlParser: true })
 require('./config/passport')
 var usersRouter = require('./routes/user')
-var app = express();
+var app = express()
 
 
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout : 'layout', extname : '.hbs'}))
 app.set('view engine', '.hbs');
 
-app.use(logger('dev'));
-app.use(express.json());
+app.use(logger('dev'))
+app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(validator())
+app.use(cookieParser())
 app.use(session({
   secret : 'mysupersecret', 
   resave : false,
-  saveUninitialized : false
+  saveUninitialized : false,
+  store : new MongoStore({ mongooseConnection : mongoose.connection }),
+  cookie : { maxAge : 180 * 60 * 1000 }
 }))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(validator())
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 app.use((req, res, next) => {
   res.locals.login = req.isAuthenticated()
+  res.locals.session = req.session
   next();
 })
 

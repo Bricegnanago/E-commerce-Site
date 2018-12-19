@@ -14,16 +14,19 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"> <i class="fas fa-shopping-cart"></i> Shopping Cart</a></li>
+        <li><a href="#"> <i class="fas fa-shopping-cart"></i> Shopping Cart
+        
+        </a>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
             {{# if login }}
-            <li><a href="/user/profile"><i class="fas fa-user"></i> User Account</a></li>
+            <li><a href="/user/profile"><i  class="fas fa-user"></i> User Account</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/user/logout">LogOut</a></li>
 
-            {{ else}}
+            {{else}}
             <li><a href="/user/signup">Sign Up</a></li>
             
             <li><a href="/user/signin">Sing In</a></li>
