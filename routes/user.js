@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport')
-// var LocalStrategy  = require('passport-local').Strategy
+var LocalStrategy  = require('passport-local').Strategy
 var csrf = require('csurf') //On appelle le modules
 var Product = require('../models/product')
 
